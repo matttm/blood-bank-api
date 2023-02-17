@@ -1,8 +1,9 @@
-import {Router} from "express";
+const { Router } = require('express');
+const  bloodBankController = require('../controllers/blood-bank.controller');
 
 const bloodBankRoutes = Router();
 
-bloodBankRoutes.path('blood-bank')
-    .get();
+bloodBankRoutes.route('blood-bank')
+    .get(bloodBankController.getAll);
 
 module.exports = bloodBankRoutes;
