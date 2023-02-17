@@ -7,7 +7,7 @@ app.use(express.json());
 
 app.use('/api/v1', v1);
 
-app.get('/timestamp', (req, res) => {
+app.get('/', (req, res) => {
     return Date.now();
 })
 module.exports = app;

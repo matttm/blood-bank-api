@@ -1,4 +1,7 @@
 const app = require('app');
 const serverless = require('serverless-http');
 
-module.exports.handler = serverless(app);
+const handler = serverless(app, { provider: 'aws' });
+module.exports.handler = async (context, req) => {
+    context.res = await handler(context, req);
+}
