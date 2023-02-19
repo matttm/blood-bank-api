@@ -1,7 +1,19 @@
-const app = require('app');
-const serverless = require('serverless-http');
+'use strict';
+const awsServerlessExpress = require('aws-serverless-express');
+const app = require('./server');
+const binaryMimeTypes = [
+    'application/octet-stream',
+    'font/eot',
+    'font/opentype',
+    'font/otf',
+    'image/jpeg',
+    'image/png',
+    'image/svg+xml'
+];
+const server = awsServerlessExpress.createServer(app, null, binaryMimeTypes);
 
-const handler = serverless(app, { provider: 'aws' });
-module.exports.handler = async (context, req) => {
-    context.res = await handler(context, req);
-}
+exports.handler = (event, context) => {
+    console.log(`EVENT: ${JSON.stringify(event)}`);
+    context.callbackWaitsForEmptyEventLoop = false;
+    awsServerlessExpress.proxy(server, event, context);
+};
