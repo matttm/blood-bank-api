@@ -8,6 +8,6 @@ app.use(express.json());
 app.use('/api/v1', v1);
 
 app.get('/', (req, res) => {
-    return Date.now();
+    return res.send(Date.now());
 })
 module.exports = app;
