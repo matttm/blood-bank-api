@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const  bloodBankController = require('../controllers/blood-bank.controller');
+const  bloodBankController = require('./blood-bank.controller');
 
 const bloodBankRoutes = Router();
 

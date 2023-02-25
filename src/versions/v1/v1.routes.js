@@ -1,8 +1,10 @@
 const {Router} = require("express");
-const bloodBank = require('./routes/blood-bank.routes');
+const bloodBank = require('./blood-bank/blood-bank.routes');
+const donors = require('./donors/donors.routes');
 
 const v1 = new Router();
 
 v1.use('/blood-bank', bloodBank);
+v1.use('/donors', donors);
 
 module.exports = v1;
