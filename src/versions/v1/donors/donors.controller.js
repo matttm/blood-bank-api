@@ -27,9 +27,8 @@ async function getDonor(req, res) {
 }
 
 async function createDonor(req, res) {
-    console.log(obj);
     try {
-        return obj.Donor.findAll();
+        return models.Donor.findAll();
     } catch (e) {
         console.error(`Error: ${e}`);
         return res.json({ success: false });
