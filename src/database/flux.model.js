@@ -1,7 +1,8 @@
 module.exports= (sequelize, Sequelize) => {
     return sequelize.define("Flux", {
         fluxId: {
-            type: Sequelize.UUID
+            type: Sequelize.UUID,
+            primaryKey: true
         },
         fluxType: {
             type: Sequelize.STRING

@@ -1,7 +1,8 @@
 module.exports= (sequelize, Sequelize) => {
     return sequelize.define("FluxType", {
         fluxTypeId: {
-            type: Sequelize.STRING
+            type: Sequelize.STRING,
+            primaryKey: true
         },
         fluxTypeDesc: {
             type: Sequelize.STRING

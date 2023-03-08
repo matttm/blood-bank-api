@@ -1,7 +1,8 @@
 module.exports= (sequelize, Sequelize) => {
     return sequelize.define("Donor", {
         donorId: {
-            type: Sequelize.UUID
+            type: Sequelize.UUID,
+            primaryKey: true
         },
         firstName: {
             type: Sequelize.STRING

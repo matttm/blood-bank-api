@@ -1,6 +1,12 @@
-const { Donor } = require('../../../database');
+const obj = require('../../../database');
 async function getDonors(req, res) {
-    return Donor.findAll();
+    console.log(obj);
+    try {
+        return obj.Donor.findAll();
+    } catch (e) {
+        console.error(`Error: ${e}`);
+        return res.json({ success: false });
+    }
 }
 
 module.exports = {
