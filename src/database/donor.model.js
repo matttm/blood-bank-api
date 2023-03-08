@@ -1,5 +1,5 @@
 module.exports= (sequelize, Sequelize) => {
-    return sequelize.define("donor", {
+    return sequelize.define("Donor", {
         donorId: {
             type: Sequelize.UUID
         },
@@ -12,6 +12,8 @@ module.exports= (sequelize, Sequelize) => {
         bloodType: {
             type: Sequelize.STRING
         },
+    }, {
+        tableName: 'DONOR'
     });
 };
 

@@ -1,5 +1,5 @@
 module.exports= (sequelize, Sequelize) => {
-    return sequelize.define("donor", {
+    return sequelize.define("Flux", {
         fluxId: {
             type: Sequelize.UUID
         },
@@ -9,6 +9,8 @@ module.exports= (sequelize, Sequelize) => {
         patientId: {
             type: Sequelize.UUID
         }
+    }, {
+        tableName: 'FLUX'
     });
 };
 
