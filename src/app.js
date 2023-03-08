@@ -1,6 +1,6 @@
 const express = require('express');
 const v1 = require('./versions/v1/v1.routes');
-const createDbInstance = require('./database');
+const { createDbInstance } = require('./database');
 
 async function createApp() {
     const app = express();

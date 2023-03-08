@@ -1,6 +1,6 @@
-
+const { Donor } = require('../../../database');
 async function getDonors(req, res) {
-    return res.json([]);
+    return Donor.findAll();
 }
 
 module.exports = {

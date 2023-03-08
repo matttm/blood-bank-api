@@ -22,12 +22,14 @@ function createDbInstance() {
             files = files.filter((f) => !f.includes('index'));
             for (let file of files) {
                 console.log(`Loading model ${file}`);
-                const model = file.split('.')[0];
-                db[model] = require(`./${model}.model`)(sequelize, Sequelize);
+                const partialFileName = file.split('.')[0];
+                const model = require(`./${partialFileName}.model`)(sequelize, Sequelize);
+                console.log(`model loaded: ${model.name}`);
+                module.exports[model.name] = model;
             }
             res(sequelize);
         });
     });
 }
 
-module.exports = createDbInstance;
+module.exports.createDbInstance = createDbInstance;
