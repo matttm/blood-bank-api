@@ -33,7 +33,7 @@ async function getDonor(req, res) {
 
 async function createDonor(req, res) {
     try {
-        const { firstName, lastName } = req.params;
+        const { firstName, lastName } = req.body;
         var params = {
             // Remove DelaySeconds parameter and value for FIFO queues
             DelaySeconds: 10,

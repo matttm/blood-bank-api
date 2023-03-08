@@ -19,6 +19,7 @@ async function createApp() {
     app.use('/api/v1', v1);
 
     app.get('/', (req, res) => {
+        console.log(req);
         return res.json({ time: Date.now() });
     });
     return app;
