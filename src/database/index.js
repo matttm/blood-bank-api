@@ -25,7 +25,7 @@ function createDbInstance() {
                 const model = file.split('.')[0];
                 db[model] = require(`./${model}.model`)(sequelize, Sequelize);
             }
-            res(db);
+            res(sequelize);
         });
     });
 }
