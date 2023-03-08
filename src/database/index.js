@@ -14,15 +14,16 @@ function createDbInstance() {
         db.Sequelize = Sequelize;
         db.sequelize = sequelize;
 
-        fs.readdir('./', (err, files) => {
+        fs.readdir('./src/database', (err, files) => {
             if (err) {
                 console.error('Error: ', err);
                 rej(err);
             }
+            files = files.filter((f) => !f.includes('index'));
             for (let file of files) {
                 console.log(`Loading model ${file}`);
                 const model = file.split('.')[0];
-                db[model] = require(`./${model}`)(sequelize, Sequelize);
+                db[model] = require(`./${model}.model`)(sequelize, Sequelize);
             }
             res(db);
         });

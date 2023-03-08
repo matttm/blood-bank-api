@@ -1,16 +1,16 @@
 module.exports= (sequelize, Sequelize) => {
     return sequelize.define("donor", {
         donorId: {
-            type: Sequelize.Number
+            type: Sequelize.UUID
         },
         firstName: {
-            type: Sequelize.String
+            type: Sequelize.STRING
         },
         lastName: {
-            type: Sequelize.String
+            type: Sequelize.STRING
         },
         bloodType: {
-            type: Sequelize.String
+            type: Sequelize.STRING
         },
     });
 };

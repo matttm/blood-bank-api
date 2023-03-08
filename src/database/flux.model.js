@@ -1,13 +1,13 @@
 module.exports= (sequelize, Sequelize) => {
     return sequelize.define("donor", {
         fluxId: {
-            type: Sequelize.Number
+            type: Sequelize.UUID
         },
         fluxType: {
-            type: Sequelize.String
+            type: Sequelize.STRING
         },
         patientId: {
-            type: Sequelize.Number
+            type: Sequelize.UUID
         }
     });
 };

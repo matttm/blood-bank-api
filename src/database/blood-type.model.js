@@ -1,10 +1,10 @@
 module.exports= (sequelize, Sequelize) => {
     return sequelize.define("bloodType", {
         bloodTypeId: {
-            type: Sequelize.String
+            type: Sequelize.STRING
         },
         bloodTypeDesc: {
-            type: Sequelize.String
+            type: Sequelize.STRING
         }
     });
 };
