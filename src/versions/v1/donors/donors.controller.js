@@ -1,6 +1,7 @@
 const models = require('../../../database');
 // Load the AWS SDK for Node.js
 var AWS = require('@aws-sdk/client-sqs');
+const {SendMessageCommand} = require("@aws-sdk/client-sqs");
 
 // Create an SQS service object
 var sqs = new AWS.SQSClient({ region: 'us-east-1' });
@@ -48,8 +49,9 @@ async function createDonor(req, res) {
             MessageGroupId: "NDA",  // Required for FIFO queues
             QueueUrl: process.env.SQS_QUEUE_URL
         };
+        const command = new SendMessageCommand(params);
 
-        sqs.sendMessage(params, function(err, data) {
+        sqs.sendMessage(command, function(err, data) {
             if (err) {
                 console.log("Error", err);
             } else {
