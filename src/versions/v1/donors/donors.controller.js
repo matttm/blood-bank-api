@@ -4,7 +4,13 @@ var AWS = require('@aws-sdk/client-sqs');
 const {SendMessageCommand} = require("@aws-sdk/client-sqs");
 
 // Create an SQS service object
-var sqs = new AWS.SQSClient({ region: 'us-east-1' });
+var sqs = new AWS.SQSClient({
+    region: 'us-east-1',
+    credentials: {
+        accessKeyId: process.env.SQS_ACCESS_KEY,
+        secretAccessKey: process.env.SQS_SECRET_KEY
+    }
+});
 
 async function getDonors(req, res) {
     console.log(models);
@@ -36,8 +42,6 @@ async function createDonor(req, res) {
     try {
         const { firstName, lastName } = req.body;
         var params = {
-            // Remove DelaySeconds parameter and value for FIFO queues
-            DelaySeconds: 10,
             MessageAttributes: {
                 "Title": {
                     DataType: "String",
@@ -51,7 +55,7 @@ async function createDonor(req, res) {
         };
         const command = new SendMessageCommand(params);
 
-        sqs.sendMessage(command, function(err, data) {
+        await sqs.send(command, function (err, data) {
             if (err) {
                 console.log("Error", err);
             } else {
