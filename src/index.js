@@ -1,23 +1,20 @@
 
 const awsServerlessExpress = require('@vendia/serverless-express');
 const createApp = require('./app');
-const binaryMimeTypes = [
-    'application/octet-stream',
-    'font/eot',
-    'font/opentype',
-    'font/otf',
-    'image/jpeg',
-    'image/png',
-    'image/svg+xml'
-];
 
-module.exports.handler = async (event, context) => {
+let serverlessExpressInstance;
+
+async function setup (event, context) {
     const app = await createApp();
-    const server = awsServerlessExpress.createServer(app, null, binaryMimeTypes);
-    return new Promise((resolve, reject) => {
-        awsServerlessExpress.proxy(server, event, {
-            ...context,
-            succeed: process.env.IS_OFFLINE ? context.succeed : resolve,
-        });
-    });
+    console.log(asyncValue);
+    serverlessExpressInstance = awsServerlessExpress({ app })
+    return serverlessExpressInstance(event, context)
 }
+
+function handler (event, context) {
+    if (serverlessExpressInstance) return serverlessExpressInstance(event, context)
+
+    return setup(event, context)
+}
+
+exports.handler = handler;
