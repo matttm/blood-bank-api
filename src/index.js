@@ -6,7 +6,6 @@ let serverlessExpressInstance;
 
 async function setup (event, context) {
     const app = await createApp();
-    console.log(asyncValue);
     serverlessExpressInstance = awsServerlessExpress({ app })
     return serverlessExpressInstance(event, context)
 }
