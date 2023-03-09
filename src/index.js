@@ -1,4 +1,4 @@
-
+require('source-map-support/register')
 const awsServerlessExpress = require('@vendia/serverless-express');
 const createApp = require('./app');
 
