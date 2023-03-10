@@ -13,9 +13,9 @@ var sqs = new AWS.SQSClient({
 });
 
 async function getDonors(req, res) {
-    console.log(models);
     try {
-        return models.Donor.findAll();
+        const donors = await models.Donor.findAll();
+        return res.json(donors);
     } catch (e) {
         console.error(`Error: ${e}`);
         throw e;
@@ -25,13 +25,12 @@ async function getDonors(req, res) {
 async function getDonor(req, res) {
     const id = req.params['donor-id'];
     try {
-        return res.json({
-            ...await models.Donor.findOne({
-                where: {
-                    donorId: id
-                }
-            })
-        });
+        const donor = await models.Donor.findOne({
+            where: {
+                donorId: id
+            }
+        })
+        return res.json(donor);
     } catch (e) {
         console.error(`Error: ${e}`);
         throw e;
@@ -62,7 +61,7 @@ async function createDonor(req, res) {
                 console.log("Success", data.MessageId);
             }
         });
-        return res.status(200).send();
+        return res.json({ success: true });
     } catch (e) {
         console.error(`Error: ${e}`);
         return res.json({ success: false });
