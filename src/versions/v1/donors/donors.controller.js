@@ -54,13 +54,7 @@ async function createDonor(req, res) {
         };
         const command = new SendMessageCommand(params);
 
-        await sqs.send(command, function (err, data) {
-            if (err) {
-                console.log("Error", err);
-            } else {
-                console.log("Success", data.MessageId);
-            }
-        });
+        const data = await sqs.send(command);
         return res.json({ success: true });
     } catch (e) {
         console.error(`Error: ${e}`);
