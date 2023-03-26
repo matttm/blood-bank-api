@@ -26,12 +26,13 @@ function MessageService() {
         }
         try {
             const params = {
-                MessageAttributes: utilityService.deepCopy(options.MessageAttributes),
-                MessageBody: utilityService.deepCopy(options.MessageBody),
+                MessageAttributes: { ...utilityService.deepCopy(options.MessageAttributes) },
+                MessageBody: { ...utilityService.deepCopy(options.MessageBody) },
                 MessageDeduplicationId: options.MessageDeduplicationId,
                 MessageGroupId: options.MessageGroupId,
                 QueueUrl: process.env.SQS_QUEUE_URL
             };
+            console.log(`Sending message to queue ${params}`);
             const command = new SendMessageCommand(params);
             return sqs.send(command);
         } catch (e) {
