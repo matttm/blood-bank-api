@@ -1,16 +1,9 @@
 const models = require('../../../database');
 // Load the AWS SDK for Node.js
 var AWS = require('@aws-sdk/client-sqs');
-const {SendMessageCommand} = require("@aws-sdk/client-sqs");
-
-// Create an SQS service object
-var sqs = new AWS.SQSClient({
-    region: 'us-east-1',
-    credentials: {
-        accessKeyId: process.env.SQS_ACCESS_KEY,
-        secretAccessKey: process.env.SQS_SECRET_KEY
-    }
-});
+const messageService = require('../../../shared/message.service');
+const {eventTypeEnum} = require("../../../enums/event-type.enum");
+const {bloodTypeCds} = require("../../../enums/blood=type.enum");
 
 async function getDonors(req, res) {
     try {
@@ -39,22 +32,35 @@ async function getDonor(req, res) {
 
 async function createDonor(req, res) {
     try {
-        const { firstName, lastName } = req.body;
+        const { firstName, lastName, bloodType } = req.body;
+        if ( !firstName || !lastName || !bloodType) {
+            console.error('Error: Required param was not provided');
+            return res.send('Error: Required param was not provided');
+        }
+        if (!bloodTypeCds.includes(bloodType)) {
+            console.error('Error: unknown blood type was provided');
+            return res.send('Error: unknown blood type was provided');
+        }
         var params = {
             MessageAttributes: {
-                "Title": {
+                "Event": {
                     DataType: "String",
-                    StringValue: "The Whistler"
+                    StringValue: eventTypeEnum.NewDonorApplication.code
                 }
             },
-            MessageBody: "New Donor Application (NDA)",
+            MessageBody: {
+                cd: eventTypeEnum.NewDonorApplication.code,
+                donor: {
+                    fname: firstName,
+                    lname: lastName,
+                    bloodType
+                }
+            },
             MessageDeduplicationId: `${firstName.toLowerCase()}-${lastName.toLowerCase()}`,  // Required for FIFO queues
-            MessageGroupId: "NDA",  // Required for FIFO queues
-            QueueUrl: process.env.SQS_QUEUE_URL
+            MessageGroupId: eventTypeEnum.NewDonorApplication.code
         };
-        const command = new SendMessageCommand(params);
 
-        const data = await sqs.send(command);
+        const data = await messageService.sendMessage(params);
         return res.json({ success: true });
     } catch (e) {
         console.error(`Error: ${e}`);
