@@ -16,3 +16,6 @@ export const bloodTypeEnum = {
         desc: ''
     }
 };
+
+export const bloodTypeCds = Object.values(bloodTypeEnum).map((obj) => obj.cd);
+
