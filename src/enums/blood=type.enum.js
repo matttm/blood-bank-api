@@ -1,4 +1,4 @@
-export const bloodTypeEnum = {
+const bloodTypeEnum = {
     A: {
         cd: 'A',
         desc: ''
@@ -17,5 +17,9 @@ export const bloodTypeEnum = {
     }
 };
 
-export const bloodTypeCds = Object.values(bloodTypeEnum).map((obj) => obj.cd);
+const bloodTypeCds = Object.values(bloodTypeEnum).map((obj) => obj.cd);
 
+module.exports = {
+    bloodTypeCds,
+    bloodTypeEnum
+};
