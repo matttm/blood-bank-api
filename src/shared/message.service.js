@@ -1,6 +1,7 @@
 const AWS = require("@aws-sdk/client-sqs");
 const {SendMessageCommand} = require("@aws-sdk/client-sqs");
 const utilityService = require('./utility.service');
+const {eventTypeEnum} = require("../enums/event-type.enum");
 
 
 function MessageService() {
@@ -26,13 +27,19 @@ function MessageService() {
         }
         try {
             const params = {
-                MessageAttributes: { ...utilityService.deepCopy(options.MessageAttributes) },
-                MessageBody: { ...utilityService.deepCopy(options.MessageBody) },
+                MessageAttributes: {
+                    ...utilityService.deepCopy(options.MessageAttributes),
+                    "Timestamp": {
+                        DataType: "String",
+                        StringValue: Date.toString()
+                    }
+                },
+                MessageBody: JSON.stringify({ ...utilityService.deepCopy(options.MessageBody) }),
                 MessageDeduplicationId: options.MessageDeduplicationId,
                 MessageGroupId: options.MessageGroupId,
                 QueueUrl: process.env.SQS_QUEUE_URL
             };
-            console.log(`Sending message to queue ${params}`);
+            console.log(`Sending message to queue ${JSON.stringify(params)}`);
             const command = new SendMessageCommand(params);
             return sqs.send(command);
         } catch (e) {
