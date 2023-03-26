@@ -1,5 +1,7 @@
 const AWS = require("@aws-sdk/client-sqs");
 const {SendMessageCommand} = require("@aws-sdk/client-sqs");
+const utilityService = require('./utility.service');
+
 
 function MessageService() {
     // Create an SQS service object
@@ -24,8 +26,8 @@ function MessageService() {
         }
         try {
             const params = {
-                MessageAttributes: options.MessageAttributes,
-                MessageBody: options.MessageBody,
+                MessageAttributes: utilityService.deepCopy(options.MessageAttributes),
+                MessageBody: utilityService.deepCopy(options.MessageBody),
                 MessageDeduplicationId: options.MessageDeduplicationId,
                 MessageGroupId: options.MessageGroupId,
                 QueueUrl: process.env.SQS_QUEUE_URL
