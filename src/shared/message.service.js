@@ -31,7 +31,7 @@ function MessageService() {
                     ...utilityService.deepCopy(options.MessageAttributes),
                     "Timestamp": {
                         DataType: "String",
-                        StringValue: Date.now(),toString()
+                        StringValue: Date.now().toString()
                     }
                 },
                 MessageBody: JSON.stringify({ ...utilityService.deepCopy(options.MessageBody) }),
