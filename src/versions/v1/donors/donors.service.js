@@ -2,6 +2,7 @@ const models = require('../../../database');
 const messageService = require('../../../shared/message.service');
 const {eventTypeEnum} = require("../../../enums/event-type.enum");
 const {bloodTypeCds} = require("../../../enums/blood=type.enum");
+const { donorsValidator } = require('./donors.validator');
 
 function DonorsService() {
     async function getDonors() {
@@ -28,13 +29,9 @@ function DonorsService() {
 
     async function createDonor(firstName, lastName, bloodType) {
         try {
-            if (!firstName || !lastName || !bloodType) {
-                console.error('Error: Required param was not provided');
-                throw 'Error: Required param was not provided';
-            }
-            if (!bloodTypeCds.includes(bloodType)) {
-                console.error('Error: unknown blood type was provided');
-                throw 'Error: unknown blood type was provided';
+            const validity = donorsValidator.isValidDonor({ firstName, lastName, bloodType });
+            if (!validity.isValid) {
+                return res.send(validity.validityError);
             }
             var params = {
                 MessageAttributes: {
