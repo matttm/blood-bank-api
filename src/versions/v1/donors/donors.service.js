@@ -9,7 +9,7 @@ function DonorsService() {
         try {
             return await models.Donor.findAll();
         } catch (e) {
-            console.error(`Error occurred while getting donors - ${e}`);
+            console.error(`Error occurred while getting donors`);
             throw e;
         }
     }
@@ -22,7 +22,7 @@ function DonorsService() {
                 }
             });
         } catch (e) {
-            console.error(`Error occurred while getting donor - ${e}`);
+            console.error(`Error occurred while getting donor`);
             throw e;
         }
     }
@@ -31,7 +31,7 @@ function DonorsService() {
         try {
             const validity = donorsValidator.isValidDonor({ firstName, lastName, bloodType });
             if (!validity.isValid) {
-                return res.send(validity.validityError);
+                return { success: false, error: validity.validityError };
             }
             var params = {
                 MessageAttributes: {
@@ -53,9 +53,9 @@ function DonorsService() {
             };
 
             const data = await messageService.sendMessage(params);
-            return !!data;
+            return { success: !!data };
         } catch (e) {
-            console.error(`Error occurred while creating donor - ${e}`);
+            console.error(`Error occurred while creating donor`);
             throw e;
         }
     }

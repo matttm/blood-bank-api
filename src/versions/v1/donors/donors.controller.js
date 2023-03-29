@@ -1,9 +1,4 @@
 const models = require('../../../database');
-// Load the AWS SDK for Node.js
-var AWS = require('@aws-sdk/client-sqs');
-const messageService = require('../../../shared/message.service');
-const {eventTypeEnum} = require("../../../enums/event-type.enum");
-const {bloodTypeCds} = require("../../../enums/blood=type.enum");
 const donorService = require('./donors.service');
 
 async function getDonors(req, res) {
@@ -32,8 +27,8 @@ async function getDonor(req, res) {
 async function createDonor(req, res) {
     try {
         const { firstName, lastName, bloodType } = req.body;
-        const isSuccess = donorService.getDonors(firstName, lastName, bloodType);
-        return res.json({ success: isSuccess });
+        const success = await donorService.createDonor(firstName, lastName, bloodType);
+        return res.json({ ...success });
     } catch (e) {
         const error = 'Error while creating new donor';
         console.error(`${error}`);
