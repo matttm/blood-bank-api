@@ -1,4 +1,3 @@
-const models = require('../../../database');
 const donorService = require('./donors.service');
 
 async function getDonors(req, res) {
@@ -13,7 +12,7 @@ async function getDonors(req, res) {
 }
 
 async function getDonor(req, res) {
-    const id = req.params['donor-id'];
+    const id = req.params['id'];
     try {
         const donor = await donorService.getDonor(id);
         return res.json(donor);
@@ -31,6 +30,19 @@ async function createDonor(req, res) {
         return res.json({ ...success });
     } catch (e) {
         const error = 'Error while creating new donor';
+        console.error(`${error}`);
+        return res.send(error);
+    }
+}
+
+async function updateDonor(req, res) {
+    try {
+        const {id} = req.params;
+        const { firstName, lastName, bloodType } = req.body;
+        const success = await donorService.updateDonor(firstName, lastName, bloodType);
+        return res.json({ ...success });
+    } catch (e) {
+        const error = 'Error while updating donor';
         console.error(`${error}`);
         return res.send(error);
     }
