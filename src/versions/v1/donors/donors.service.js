@@ -59,10 +59,44 @@ function DonorsService() {
             throw e;
         }
     }
+
+    async function updateDonor(firstName, lastName, bloodType) {
+        try {
+            const validity = donorsValidator.isValidDonorPatch({ firstName, lastName, bloodType });
+            if (!validity.isValid) {
+                return { success: false, error: validity.validityError };
+            }
+            var params = {
+                MessageAttributes: {
+                    "Event": {
+                        DataType: "String",
+                        StringValue: eventTypeEnum.EditDonorApplication.code
+                    }
+                },
+                MessageBody: {
+                    cd: eventTypeEnum.NewDonorApplication.code,
+                    donor: {
+                        fname: firstName,
+                        lname: lastName,
+                        bloodType
+                    }
+                },
+                MessageDeduplicationId: `${firstName.toLowerCase()}-${lastName.toLowerCase()}`,  // Required for FIFO queues
+                MessageGroupId: eventTypeEnum.EditDonorApplication.code
+            };
+
+            const data = await messageService.sendMessage(params);
+            return { success: !!data };
+        } catch (e) {
+            console.error(`Error occurred while updating donor`);
+            throw e;
+        }
+    }
     return Object.freeze({
         getDonors,
         getDonor,
-        createDonor
+        createDonor,
+        updateDonor
     });
 }
 
