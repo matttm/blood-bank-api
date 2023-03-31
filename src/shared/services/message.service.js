@@ -1,7 +1,7 @@
 const AWS = require("@aws-sdk/client-sqs");
 const {SendMessageCommand} = require("@aws-sdk/client-sqs");
 const utilityService = require('./utility.service');
-const {eventTypeEnum} = require("../enums/event-type.enum");
+const {eventTypeEnum} = require("../../enums/event-type.enum");
 
 
 function MessageService() {
