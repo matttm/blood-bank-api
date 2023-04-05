@@ -1,4 +1,4 @@
-function FieldValidator() {
+function GenericValidator() {
     const containsNewField = (fields, object) => {
         const validity = { isValid: true, validityError: ''};
         if (fields.map((key) => object[key]).filter(Boolean).length === 0) {
@@ -29,11 +29,17 @@ function FieldValidator() {
         }
         return validity;
     }
+    // TODO: IMPLEMENT
+    const isModelExistent = (model, id) => {
+        const validity = { isValid: true, err: '' };
+        return validity;
+    }
     return Object.freeze({
         containsNewField,
         containsUniqueField,
-        areAllFieldsNonNull
+        areAllFieldsNonNull,
+        isModelExistent
     });
 }
 
-module.exports = new FieldValidator();
+module.exports = new GenericValidator();

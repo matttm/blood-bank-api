@@ -29,7 +29,7 @@ function DonorsService() {
 
     async function createDonor(firstName, lastName, bloodType) {
         try {
-            const validity = donorsValidator.isValidDonor({ firstName, lastName, bloodType });
+            const validity = donorsValidator.isValidDonorCreation({ firstName, lastName, bloodType });
             if (!validity.isValid) {
                 return { success: false, error: validity.validityError };
             }
@@ -62,7 +62,7 @@ function DonorsService() {
 
     async function updateDonor(id, firstName, lastName, bloodType) {
         try {
-            const validity = donorsValidator.isValidDonorPatch({ firstName, lastName, bloodType });
+            const validity = donorsValidator.isValidDonorPatch(id, { firstName, lastName, bloodType });
             if (!validity.isValid) {
                 return { success: false, error: validity.validityError };
             }

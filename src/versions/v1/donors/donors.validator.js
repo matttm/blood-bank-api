@@ -1,5 +1,5 @@
 const {bloodTypeCds} = require("../../../enums/blood=type.enum");
-const fieldValidator = require('../../../shared/validators/field.validator');
+const genericValidator = require('../../../shared/validators/generic.validator');
 
 
 function DonorsValidator() {
@@ -8,9 +8,9 @@ function DonorsValidator() {
         'lastName',
         'bloodType'
     ];
-    const isValidNewDonor = (donor) => {
+    const isValidDonorCreation = (donor) => {
         let validity;
-        validity = fieldValidator.areAllFieldsNonNull(fields, { ...donor });
+        validity = genericValidator.areAllFieldsNonNull(fields, { ...donor });
         if (!validity.isValid) {
             console.error('Error: a required param for a donor was not provided');
             return validity;
@@ -23,9 +23,15 @@ function DonorsValidator() {
         }
         return validity;
     };
-    const isValidDonorPatch = (donorPatch, donor) => {
+    const isValidDonorPatch = (id, donorPatch, donor) => {
         let validity;
-        validity = fieldValidator.containsNewField(fields, { ...donor });
+        validity = genericValidator.isModelExistent(model, id);
+        if (!validity.isValid) {
+            const err ='Error: donor id does not exist';
+            console.error(err);
+            return validity;
+        }
+        validity = genericValidator.containsNewField(fields, { ...donor });
         if (!validity.isValid) {
             const err ='Error: no new field was provided';
             console.error(err);
@@ -39,7 +45,7 @@ function DonorsValidator() {
             validity.validityError = err;
             return validity;
         }
-        validity = fieldValidator.containsUniqueField(fields, { ...donorPatch }, { ...donor });
+        validity = genericValidator.containsUniqueField(fields, { ...donorPatch }, { ...donor });
         if (!validity.isValid) {
             const err = 'Error: all patch fields are up to date';
             console.error(err);
@@ -47,13 +53,8 @@ function DonorsValidator() {
         }
         return validity;
     };
-    // TODO: IMPLEMENT
-    const isDonorExistant = (id) => {
-        const validity = { isValid: true, err: '' };
-        return validity;
-    }
     return Object.freeze({
-        isValidNewDonor,
+        isValidDonorCreation,
         isValidDonorPatch
     });
 }
