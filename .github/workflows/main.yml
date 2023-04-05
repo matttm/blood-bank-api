@@ -1,7 +1,13 @@
 name: deploy to lambda
-on: [push]
+on:
+  pull_request:
+    branches:
+      - main
+    types: [closed]
+
 jobs:
   deploy_source:
+    if: ${{ github.event.pull_request.merged }}
     name: build and deploy lambda
     strategy:
       matrix:
