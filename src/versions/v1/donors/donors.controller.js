@@ -39,7 +39,20 @@ async function updateDonor(req, res) {
     try {
         const {id} = req.params;
         const { firstName, lastName, bloodType } = req.body;
-        const success = await donorService.updateDonor(firstName, lastName, bloodType);
+        const success = await donorService.updateDonor(id, firstName, lastName, bloodType);
+        return res.json({ ...success });
+    } catch (e) {
+        const error = 'Error while updating donor';
+        console.error(`${error}`);
+        return res.send(error);
+    }
+}
+
+async function deleteDonor(req, res) {
+    try {
+        const {id} = req.params;
+        const { firstName, lastName, bloodType } = req.body;
+        const success = await donorService.deleteDonor(id);
         return res.json({ ...success });
     } catch (e) {
         const error = 'Error while updating donor';
@@ -50,5 +63,6 @@ async function updateDonor(req, res) {
 module.exports = {
     getDonors,
     getDonor,
-    createDonor
+    createDonor,
+    updateDonor
 };

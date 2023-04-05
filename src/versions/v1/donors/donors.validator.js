@@ -47,6 +47,11 @@ function DonorsValidator() {
         }
         return validity;
     };
+    // TODO: IMPLEMENT
+    const isDonorExistant = (id) => {
+        const validity = { isValid: true, err: '' };
+        return validity;
+    }
     return Object.freeze({
         isValidNewDonor,
         isValidDonorPatch

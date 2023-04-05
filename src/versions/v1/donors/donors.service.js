@@ -60,7 +60,7 @@ function DonorsService() {
         }
     }
 
-    async function updateDonor(firstName, lastName, bloodType) {
+    async function updateDonor(id, firstName, lastName, bloodType) {
         try {
             const validity = donorsValidator.isValidDonorPatch({ firstName, lastName, bloodType });
             if (!validity.isValid) {
@@ -92,11 +92,20 @@ function DonorsService() {
             throw e;
         }
     }
+    async function deleteDonor(id, firstName, lastName, bloodType) {
+        try {
+            return { success: !!data };
+        } catch (e) {
+            console.error(`Error occurred while deleting donor`);
+            throw e;
+        }
+    }
     return Object.freeze({
         getDonors,
         getDonor,
         createDonor,
-        updateDonor
+        updateDonor,
+        deleteDonor
     });
 }
 
