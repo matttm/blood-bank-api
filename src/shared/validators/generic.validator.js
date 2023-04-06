@@ -29,16 +29,10 @@ function GenericValidator() {
         }
         return validity;
     }
-    // TODO: IMPLEMENT
-    const isModelExistent = (model, id) => {
-        const validity = { isValid: true, err: '' };
-        return validity;
-    }
     return Object.freeze({
         containsNewField,
         containsUniqueField,
-        areAllFieldsNonNull,
-        isModelExistent
+        areAllFieldsNonNull
     });
 }
 

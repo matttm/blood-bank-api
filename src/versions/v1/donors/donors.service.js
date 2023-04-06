@@ -1,8 +1,8 @@
 const models = require('../../../database');
 const messageService = require('../../../shared/services/message.service');
 const {eventTypeEnum} = require("../../../enums/event-type.enum");
-const {bloodTypeCds} = require("../../../enums/blood=type.enum");
 const { donorsValidator } = require('./donors.validator');
+const modelService = require('../../../shared/services/model.service');
 
 function DonorsService() {
     async function getDonors() {
@@ -109,4 +109,4 @@ function DonorsService() {
     });
 }
 
-module.exports = new DonorsService();
+module.exports =  DonorsService();

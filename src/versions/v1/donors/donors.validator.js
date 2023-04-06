@@ -1,4 +1,4 @@
-const {bloodTypeCds} = require("../../../enums/blood=type.enum");
+const {bloodTypeCds} = require("../../../enums/blood-type.enum");
 const genericValidator = require('../../../shared/validators/generic.validator');
 
 
@@ -25,12 +25,12 @@ function DonorsValidator() {
     };
     const isValidDonorPatch = (id, donorPatch, donor) => {
         let validity;
-        validity = genericValidator.isModelExistent(model, id);
-        if (!validity.isValid) {
-            const err ='Error: donor id does not exist';
-            console.error(err);
-            return validity;
-        }
+        // validity = genericValidator.isModelExistent(model, id);
+        // if (!validity.isValid) {
+        //     const err ='Error: donor id does not exist';
+        //     console.error(err);
+        //     return validity;
+        // }
         validity = genericValidator.containsNewField(fields, { ...donor });
         if (!validity.isValid) {
             const err ='Error: no new field was provided';
@@ -59,4 +59,4 @@ function DonorsValidator() {
     });
 }
 
-module.exports = new DonorsValidator();
+module.exports = DonorsValidator();
