@@ -11,7 +11,7 @@ donorsRouter.route('/')
 
 donorsRouter.route(
     '/:id',
-    isModelExistentMiddleware(models['Donor'])
+    isModelExistentMiddleware(models['Donor'], 'donorId')
 )
     .get(donorsController.getDonor)
     .patch(donorsController.updateDonor)

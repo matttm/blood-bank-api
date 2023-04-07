@@ -1,6 +1,6 @@
 const modelService = require('../services/model.service');
 
-function isModelExistentMiddleware(model) {
+function isModelExistentMiddleware(model, key) {
     return async function (req, res, next) {
         const { id } = req.params;
         if (await modelService.isModelExistent(model, key, id)) {
