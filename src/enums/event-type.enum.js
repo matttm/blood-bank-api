@@ -1,11 +1,15 @@
 const eventTypeEnum = {
-    NewDonorApplication: {
+    NewDonorApplicant: {
         code: 'NDA',
-        desc: ''
+        desc: 'New Donor Applicant'
     },
-    EditDonorApplication: {
+    EditDonorApplicant: {
         code: 'EDA',
-        desc: ''
+        desc: 'Edit Donor Applicant'
+    },
+    DeleteDonorApplicant: {
+        code: 'DDA',
+        desc: 'Delete Donor Applicant'
     }
 }
 

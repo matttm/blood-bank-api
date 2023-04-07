@@ -37,11 +37,11 @@ function DonorsService() {
                 MessageAttributes: {
                     "Event": {
                         DataType: "String",
-                        StringValue: eventTypeEnum.NewDonorApplication.code
+                        StringValue: eventTypeEnum.NewDonorApplicant.code
                     }
                 },
                 MessageBody: {
-                    cd: eventTypeEnum.NewDonorApplication.code,
+                    cd: eventTypeEnum.NewDonorApplicant.code,
                     donor: {
                         fname: firstName,
                         lname: lastName,
@@ -49,7 +49,7 @@ function DonorsService() {
                     }
                 },
                 MessageDeduplicationId: `${firstName.toLowerCase()}-${lastName.toLowerCase()}`,  // Required for FIFO queues
-                MessageGroupId: eventTypeEnum.NewDonorApplication.code
+                MessageGroupId: eventTypeEnum.NewDonorApplicant.code
             };
 
             const data = await messageService.sendMessage(params);
@@ -70,11 +70,11 @@ function DonorsService() {
                 MessageAttributes: {
                     "Event": {
                         DataType: "String",
-                        StringValue: eventTypeEnum.EditDonorApplication.code
+                        StringValue: eventTypeEnum.EditDonorApplicant.code
                     }
                 },
                 MessageBody: {
-                    cd: eventTypeEnum.NewDonorApplication.code,
+                    cd: eventTypeEnum.NewDonorApplicant.code,
                     donor: {
                         fname: firstName,
                         lname: lastName,
@@ -82,7 +82,7 @@ function DonorsService() {
                     }
                 },
                 MessageDeduplicationId: `${firstName.toLowerCase()}-${lastName.toLowerCase()}`,  // Required for FIFO queues
-                MessageGroupId: eventTypeEnum.EditDonorApplication.code
+                MessageGroupId: eventTypeEnum.EditDonorApplicant.code
             };
 
             const data = await messageService.sendMessage(params);
