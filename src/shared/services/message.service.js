@@ -1,7 +1,7 @@
 const AWS = require("@aws-sdk/client-sqs");
 const {SendMessageCommand} = require("@aws-sdk/client-sqs");
 const utilityService = require('./utility.service');
-const {eventTypeEnum} = require("../enums/event-type.enum");
+const {eventTypeEnum} = require("../../enums/event-type.enum");
 
 
 function MessageService() {
@@ -13,6 +13,24 @@ function MessageService() {
             secretAccessKey: process.env.SQS_SECRET_KEY
         }
     });
+    const constructMessage = (eventTypeCd, payload) => {
+        const dedupeId = payload.id ?? Object.values(payload)
+            .reduce((acc, cur) => acc.concat(cur.toString()), '');
+        return {
+            MessageAttributes: {
+                "Event": {
+                    DataType: "String",
+                    StringValue: eventTypeCd
+                }
+            },
+            MessageBody: {
+                cd: eventTypeCd,
+                donor: { ...payload }
+            },
+            MessageDeduplicationId: dedupeId,
+            MessageGroupId: eventTypeCd
+        };
+    }
     const sendMessage = (options) => {
         const requiredFields = [
             'MessageAttributes',
@@ -31,7 +49,7 @@ function MessageService() {
                     ...utilityService.deepCopy(options.MessageAttributes),
                     "Timestamp": {
                         DataType: "String",
-                        StringValue: Date.toString()
+                        StringValue: Date.now().toString()
                     }
                 },
                 MessageBody: JSON.stringify({ ...utilityService.deepCopy(options.MessageBody) }),
@@ -48,6 +66,7 @@ function MessageService() {
         }
     }
     return Object.freeze({
+        constructMessage,
         sendMessage
     });
 }
