@@ -33,7 +33,7 @@ function DonorsService() {
             if (!validity.isValid) {
                 return { success: false, error: validity.validityError };
             }
-            var params = messageService.constructMessage(
+            const params = messageService.constructMessage(
                 eventTypeEnum.NewDonorApplicant.code, {
                     fname: firstName,
                     lname: lastName,
@@ -54,7 +54,7 @@ function DonorsService() {
             if (!validity.isValid) {
                 return { success: false, error: validity.validityError };
             }
-            var params = messageService.constructMessage(
+            const params = messageService.constructMessage(
                 eventTypeEnum.EditDonorApplicant.code, {
                     id,
                     fname: firstName,
@@ -71,7 +71,7 @@ function DonorsService() {
     }
     async function deleteDonor(id) {
         try {
-            var params = messageService.constructMessage(
+            const params = messageService.constructMessage(
                 eventTypeEnum.DeleteDonorApplicant.code, {
                     id
                 }
