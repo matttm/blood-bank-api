@@ -33,25 +33,13 @@ function DonorsService() {
             if (!validity.isValid) {
                 return { success: false, error: validity.validityError };
             }
-            var params = {
-                MessageAttributes: {
-                    "Event": {
-                        DataType: "String",
-                        StringValue: eventTypeEnum.NewDonorApplicant.code
-                    }
-                },
-                MessageBody: {
-                    cd: eventTypeEnum.NewDonorApplicant.code,
-                    donor: {
-                        fname: firstName,
-                        lname: lastName,
-                        bloodType
-                    }
-                },
-                MessageDeduplicationId: `${firstName.toLowerCase()}-${lastName.toLowerCase()}`,  // Required for FIFO queues
-                MessageGroupId: eventTypeEnum.NewDonorApplicant.code
-            };
-
+            var params = messageService.constructMessage(
+                eventTypeEnum.NewDonorApplicant.code, {
+                    fname: firstName,
+                    lname: lastName,
+                    bloodType
+                }
+            );
             const data = await messageService.sendMessage(params);
             return { success: !!data };
         } catch (e) {
@@ -66,25 +54,14 @@ function DonorsService() {
             if (!validity.isValid) {
                 return { success: false, error: validity.validityError };
             }
-            var params = {
-                MessageAttributes: {
-                    "Event": {
-                        DataType: "String",
-                        StringValue: eventTypeEnum.EditDonorApplicant.code
-                    }
-                },
-                MessageBody: {
-                    cd: eventTypeEnum.NewDonorApplicant.code,
-                    donor: {
-                        fname: firstName,
-                        lname: lastName,
-                        bloodType
-                    }
-                },
-                MessageDeduplicationId: `${firstName.toLowerCase()}-${lastName.toLowerCase()}`,  // Required for FIFO queues
-                MessageGroupId: eventTypeEnum.EditDonorApplicant.code
-            };
-
+            var params = messageService.constructMessage(
+                eventTypeEnum.EditDonorApplicant.code, {
+                    id,
+                    fname: firstName,
+                    lname: lastName,
+                    bloodType
+                }
+            );
             const data = await messageService.sendMessage(params);
             return { success: !!data };
         } catch (e) {
@@ -92,8 +69,14 @@ function DonorsService() {
             throw e;
         }
     }
-    async function deleteDonor(id, firstName, lastName, bloodType) {
+    async function deleteDonor(id) {
         try {
+            var params = messageService.constructMessage(
+                eventTypeEnum.DeleteDonorApplicant.code, {
+                    id
+                }
+            );
+            const data = await messageService.sendMessage(params);
             return { success: !!data };
         } catch (e) {
             console.error(`Error occurred while deleting donor`);

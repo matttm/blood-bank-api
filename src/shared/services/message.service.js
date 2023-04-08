@@ -13,6 +13,24 @@ function MessageService() {
             secretAccessKey: process.env.SQS_SECRET_KEY
         }
     });
+    const constructMessage = (eventTypeCd, payload) => {
+        const dedupeId = payload.id ?? Object.values(payload)
+            .reduce((acc, cur) => acc.concat(cur.toString()), '');
+        return {
+            MessageAttributes: {
+                "Event": {
+                    DataType: "String",
+                    StringValue: eventTypeCd
+                }
+            },
+            MessageBody: {
+                cd: eventTypeCd,
+                donor: { ...payload }
+            },
+            MessageDeduplicationId: dedupeId,
+            MessageGroupId: eventTypeCd
+        };
+    }
     const sendMessage = (options) => {
         const requiredFields = [
             'MessageAttributes',
@@ -48,6 +66,7 @@ function MessageService() {
         }
     }
     return Object.freeze({
+        constructMessage,
         sendMessage
     });
 }

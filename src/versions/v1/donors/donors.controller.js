@@ -51,7 +51,6 @@ async function updateDonor(req, res) {
 async function deleteDonor(req, res) {
     try {
         const {id} = req.params;
-        const { firstName, lastName, bloodType } = req.body;
         const success = await donorService.deleteDonor(id);
         return res.json({ ...success });
     } catch (e) {
@@ -64,5 +63,6 @@ module.exports = {
     getDonors,
     getDonor,
     createDonor,
-    updateDonor
+    updateDonor,
+    deleteDonor
 };
