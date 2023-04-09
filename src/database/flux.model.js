@@ -1,12 +1,12 @@
 module.exports= (sequelize, Sequelize) => {
-    return sequelize.define("Flux", {
-        fluxId: {
-            field: 'FLUX_ID',
+    return sequelize.define("Transaction", {
+        transactionId: {
+            field: 'TRANSACTION_ID',
             type: Sequelize.UUID,
             primaryKey: true
         },
-        fluxType: {
-            field: 'FLUX_TYPE',
+        transactionType: {
+            field: 'TRANSACTION_TYPE',
             type: Sequelize.STRING
         },
         patientId: {
@@ -14,7 +14,7 @@ module.exports= (sequelize, Sequelize) => {
             type: Sequelize.UUID
         }
     }, {
-        tableName: 'FLUX'
+        tableName: 'TRANSACTION'
     });
 };
 
