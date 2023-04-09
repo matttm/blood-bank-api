@@ -14,8 +14,16 @@ function MessageService() {
         }
     });
     const constructMessage = (eventTypeCd, payload) => {
-        const dedupeId = payload.id ?? Object.values(payload)
-            .reduce((acc, cur) => acc.concat(cur.toString()), '');
+        // if there is an id in the payload, it will be dedupe id,
+        // if not, combine all payload fields
+        const dedupeId = payload.id
+            ? `${eventTypeCd}-${payload.id}`
+            : Object.values(payload)
+                .reduce((acc, cur, idx, arr) => {
+                    return acc
+                        .concat('-')
+                        .concat(cur.toString())
+                }, `${eventTypeCd}`);
         return {
             MessageAttributes: {
                 "Event": {
