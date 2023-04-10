@@ -7,11 +7,25 @@ module.exports= (sequelize, Sequelize) => {
         },
         transactionType: {
             field: 'TRANSACTION_TYPE',
-            type: Sequelize.STRING
+            type: Sequelize.STRING,
+            allowNull: false
         },
-        patientId: {
-            field: 'PATIENT_ID',
-            type: Sequelize.UUID
+        donorId: {
+            field: 'DONOR_ID',
+            type: Sequelize.UUID,
+            allowNull: false
+        },
+        bloodAmountML: {
+            type: Sequelize.INT,
+            allowNull: false
+        },
+        createdAt: {
+            type: 'TIMESTAMP',
+            allowNull: false
+        },
+        updatedAt: {
+            type: 'TIMESTAMP',
+            allowNull: false
         }
     }, {
         tableName: 'TRANSACTION'
