@@ -9,3 +9,11 @@ This is a backend API for a blood bank. This api only actually queries the datab
 ## Getting Started
 
 ## Contributing
+
+## Authors
+- matttm : Matt Maloney : matttmaloney@gmail.com
+## Issues
+If you encounter an issue or a discrepency in the documentation, please message me or open an issue.
+## License
+This project is licensed under the MIT License - see the LICENSE.md file for details
+
