@@ -5,6 +5,12 @@ CREATE TABLE BLOOD_TYPE (
     PRIMARY KEY (BLOOD_TYPE_ID)
 );
 
+CREATE TABLE EVENT_TYPE (
+    EVENT_TYPE_ID varchar(3) NOT NULL,
+    EVENT_TYPE_DESC varchar(1024),
+    PRIMARY KEY (TRANSACTION_TYPE_ID)
+);
+
 CREATE TABLE TRANSACTION_TYPE (
     TRANSACTION_TYPE_ID varchar(3) NOT NULL,
     TRANSACTION_TYPE_DESC varchar(1024),
@@ -52,3 +58,10 @@ INSERT INTO blood_bank_db.TRANSACTION_TYPE
 VALUES
 ('D', 'Donation'),
 ('T', 'Transfusion');
+
+INSERT INTO blood_bank_db.EVENT_TYPE
+(EVENT_TYPE_ID, EVENT_TYPE_DESC)
+VALUES
+('NDA', 'New Donor Applicant'),
+('EDA', 'Edit Donor Applicant'),
+('DDA', 'Delete Donor Applicant');
