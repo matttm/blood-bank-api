@@ -13,10 +13,22 @@ module.exports= (sequelize, Sequelize) => {
             field: 'LAST_NAME',
             type: Sequelize.STRING
         },
+        email: {
+            type: Sequelize.STRING,
+            allowNull: true
+        },
         bloodType: {
             field: 'BLOOD_TYPE',
             type: Sequelize.STRING
         },
+        createdAt: {
+            type: 'TIMESTAMP',
+            allowNull: false
+        },
+        updatedAt: {
+            type: 'TIMESTAMP',
+            allowNull: false
+        }
     }, {
         tableName: 'DONOR'
     });
