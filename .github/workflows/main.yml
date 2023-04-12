@@ -25,6 +25,9 @@ jobs:
           npm run build --if-present
         env:
           CI: true
+      - name: exclude from deployment
+        run: |
+          rm -rf scripts resources README.md LICENSE
       - name: zip
         uses: montudor/action-zip@v0.1.0
         with:
