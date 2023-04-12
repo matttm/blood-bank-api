@@ -8,6 +8,11 @@ This is a backend API for a blood bank. This api only actually queries the datab
 
 ## Getting Started
 
+## Database structure
+
+![database structure](resources/blood_bank_db.png)
+
+
 ## Contributing
 
 ## Authors
