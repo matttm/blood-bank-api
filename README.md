@@ -12,6 +12,9 @@ This is a backend API for a blood bank. This api only actually queries the datab
 
 ![database structure](resources/blood_bank_db.png)
 
+## Cloud Architecture
+
+![cloud architecture](resources/blood-bank-aws.svg)
 
 ## Contributing
 
