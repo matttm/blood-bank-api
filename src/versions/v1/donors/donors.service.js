@@ -31,6 +31,7 @@ function DonorsService() {
         try {
             const validity = donorsValidator.isValidDonorCreation({ firstName, lastName, bloodType });
             if (!validity.isValid) {
+                console.info('Donor is invalid');
                 return { success: false, error: validity.validityError };
             }
             const params = messageService.constructMessage(

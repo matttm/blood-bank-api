@@ -14,6 +14,7 @@ function MessageService() {
         }
     });
     const constructMessage = (eventTypeCd, payload) => {
+        console.info(`Constructing message for ${eventTypeCd}`);
         // if there is an id in the payload, it will be dedupe id,
         // if not, combine all payload fields
         const dedupeId = payload.id
@@ -24,6 +25,7 @@ function MessageService() {
                         .concat('-')
                         .concat(cur.toString())
                 }, `${eventTypeCd}`);
+        console.info(`Deduplication id for ${eventTypeCd} is ${dedupeId}`)
         return {
             MessageAttributes: {
                 "Event": {
@@ -40,6 +42,7 @@ function MessageService() {
         };
     }
     const sendMessage = (options) => {
+        console.info(`Preparing message: ${options}`);
         const requiredFields = [
             'MessageAttributes',
             'MessageBody',

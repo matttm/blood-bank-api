@@ -27,11 +27,11 @@ async function createDonor(req, res) {
     try {
         const { firstName, lastName, bloodType } = req.body;
         const success = await donorService.createDonor(firstName, lastName, bloodType);
-        return res.json({ ...success });
+        return res.status(200).json({ ...success });
     } catch (e) {
         const error = 'Error while creating new donor';
         console.error(`${error}`);
-        return res.send(error);
+        return res.status(500).send(error);
     }
 }
 
