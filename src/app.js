@@ -8,7 +8,7 @@ async function createApp() {
 
     try {
         await instance.authenticate();
-        console.log('Connection has been established successfully.');
+        console.info('Connection has been established successfully.');
     } catch (error) {
         console.error('Unable to connect to the database:', error);
     }
@@ -19,7 +19,7 @@ async function createApp() {
     app.use('/api/v1', v1);
 
     app.get('/', (req, res) => {
-        console.log(req);
+        console.info(req);
         return res.json({ time: Date.now() });
     });
     return app;

@@ -1,7 +1,7 @@
 const models = require('../../../database');
 const messageService = require('../../../shared/services/message.service');
 const {eventTypeEnum} = require("../../../enums/event-type.enum");
-const { donorsValidator } = require('./donors.validator');
+const donorsValidator = require('./donors.validator');
 
 function DonorsService() {
     const Donor = models['Donor'];
@@ -29,11 +29,13 @@ function DonorsService() {
 
     async function createDonor(firstName, lastName, bloodType) {
         try {
+            console.info('Creating donor...');
             const validity = donorsValidator.isValidDonorCreation({ firstName, lastName, bloodType });
             if (!validity.isValid) {
-                console.info('Donor is invalid');
+                console.info('Donor is invalid', validity.validityError);
                 return { success: false, error: validity.validityError };
             }
+            console.info('Donor is valid');
             const params = messageService.constructMessage(
                 eventTypeEnum.NewDonorApplicant.code, {
                     fname: firstName,

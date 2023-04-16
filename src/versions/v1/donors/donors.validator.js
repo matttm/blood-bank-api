@@ -9,6 +9,7 @@ function DonorsValidator() {
         'bloodType'
     ];
     const isValidDonorCreation = (donor) => {
+        console.info('Gathering validity');
         let validity;
         validity = genericValidator.areAllFieldsNonNull(fields, { ...donor });
         if (!validity.isValid) {

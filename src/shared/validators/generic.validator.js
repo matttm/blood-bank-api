@@ -21,7 +21,8 @@ function GenericValidator() {
     };
     const areAllFieldsNonNull = (fields, object) => {
         const validity = {isValid: true, validityError: ''};
-        if (fields.filter((key) => !object[key])) {
+        console.info(fields.filter((key) => !object[key]))
+        if (fields.filter((key) => !object[key]).length) {
             const err = 'Error: object contains a null required field';
             console.error(err);
             validity.isValid = false;

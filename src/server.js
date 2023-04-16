@@ -1,6 +1,6 @@
 const createApp = require('./app');
 (async () => {
-    console.log('Creating app');
+    console.info('Creating app');
     const app = await createApp();
-    app.listen(3000, () => console.log(`Listening on: 3000`));
+    app.listen(3000, () => console.info(`Listening on: 3000`));
 })();

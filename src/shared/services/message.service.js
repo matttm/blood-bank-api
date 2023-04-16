@@ -68,7 +68,7 @@ function MessageService() {
                 MessageGroupId: options.MessageGroupId,
                 QueueUrl: process.env.SQS_QUEUE_URL
             };
-            console.log(`Sending message to queue ${JSON.stringify(params)}`);
+            console.info(`Sending message to queue ${JSON.stringify(params)}`);
             const command = new SendMessageCommand(params);
             return sqs.send(command);
         } catch (e) {

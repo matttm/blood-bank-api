@@ -24,10 +24,10 @@ function createDbInstance() {
             }
             files = files.filter((f) => !f.includes('index'));
             for (let file of files) {
-                console.log(`Loading model ${file}`);
+                console.info(`Loading model ${file}`);
                 const partialFileName = file.split('.')[0];
                 const model = require(`./${partialFileName}.model`)(sequelize, Sequelize);
-                console.log(`model loaded: ${model.name}`);
+                console.info(`model loaded: ${model.name}`);
                 module.exports[model.name] = model;
             }
             res(sequelize);
