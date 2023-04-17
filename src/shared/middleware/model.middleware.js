@@ -4,7 +4,9 @@ function isModelExistentMiddleware(model, key) {
     return async function (req, res, next) {
         try {
             const {id} = req.params;
+            console.log('in mw')
             if (await modelService.isModelExistent(model, key, id)) {
+                console.log('in true case')
                 next();
             } else {
                 console.info(`Error: id of ${id} does not exist`);
