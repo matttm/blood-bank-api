@@ -69,6 +69,36 @@ describe("GenericValidator", () => {
         expect: false,
         expectError,
       },
+      {
+        title: "should return false when one field is null",
+        object: {
+          name: "Jake",
+          age: null,
+          email: null,
+        },
+        expect: false,
+        expectError,
+      },
+      {
+        title:
+          "should return false when all fields in object are vaalid, but is missing property fromfield list",
+        object: {
+          name: "null",
+          age: 41,
+        },
+        expect: false,
+        expectError,
+      },
+      {
+        title: "should return true when no fields are null",
+        object: {
+          name: "Jake",
+          age: 68,
+          email: "me@wood.com",
+        },
+        expect: true,
+        expectError: "",
+      },
     ];
     for (const test of testingTable) {
       it(test.title, () => {
