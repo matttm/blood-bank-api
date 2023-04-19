@@ -1,9 +1,7 @@
-
-
 async function getAll() {
-    return [];
+  return [];
 }
 
 module.exports = {
-    getAll
+  getAll,
 };
