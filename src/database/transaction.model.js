@@ -18,7 +18,7 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: false,
       },
       bloodAmountML: {
-        type: Sequelize.INT,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       createdAt: {
