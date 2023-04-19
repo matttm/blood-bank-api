@@ -9,6 +9,15 @@ function GenericValidator() {
     }
     return validity;
   };
+  /**
+   * @descriptionThis is used for validation of a PATCH. It ensures the object
+   * has an actual update.
+   *
+   * @param {*} fields list of fields to check
+   * @param {*} o1
+   * @param {*} o2
+   * @returns
+   */
   const containsUniqueField = (fields, o1, o2) => {
     const validity = { isValid: true, validityError: "" };
     if (
@@ -22,6 +31,14 @@ function GenericValidator() {
     }
     return validity;
   };
+  /**
+   * @description function for verifying POST calls. This ensures every
+   * field in field list is in non-falsy property in object
+   *
+   * @param {@} fields a list of the required fields
+   * @param {*} object object being validated
+   * @returns { isValid: Boolean, validityError: string }
+   */
   const areAllFieldsNonNull = (fields, object) => {
     const validity = { isValid: true, validityError: "" };
     if (fields.filter((key) => !object[key]).length) {

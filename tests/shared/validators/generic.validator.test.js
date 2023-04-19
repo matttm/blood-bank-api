@@ -2,7 +2,7 @@ const genericValidator = require("../../..//src/shared/validators/generic.valida
 
 describe("GenericValidator", () => {
   const fields = ["name", "age", "email"];
-  describe("containsNewField", () => {
+  describe("containsUniqueField", () => {
     const expectedError = "Error: all patch fields are up to date";
     const original = {
       name: "John",
@@ -112,4 +112,5 @@ describe("GenericValidator", () => {
       });
     }
   });
+  describe("containsNewField", () => {});
 });
