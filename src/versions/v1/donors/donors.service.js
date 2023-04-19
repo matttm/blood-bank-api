@@ -1,7 +1,7 @@
 const models = require("../../../database");
 const messageService = require("../../../shared/services/message.service");
 const { eventTypeEnum } = require("../../../enums/event-type.enum");
-const { donorsValidator } = require("./donors.validator");
+const donorsValidator = require("./donors.validator");
 
 function DonorsService() {
   const Donor = models["Donor"];
