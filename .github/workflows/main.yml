@@ -27,7 +27,7 @@ jobs:
           CI: true
       - name: exclude from deployment
         run: |
-          rm -rf scripts resources README.md LICENSE
+          rm -rf scripts resources README.md LICENSE tests
       - name: zip
         uses: montudor/action-zip@v0.1.0
         with:
