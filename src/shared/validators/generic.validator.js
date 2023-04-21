@@ -1,5 +1,12 @@
 function GenericValidator() {
-  const containsNewField = (fields, object) => {
+  /**
+   * @description Verifies whether atleast one identified field is truthy
+   *
+   * @param {*} fields keys to check for truthiness
+   * @param {*} object object in question
+   * @returns
+   */
+  const areSomeFieldsNonNull = (fields, object) => {
     const validity = { isValid: true, validityError: "" };
     if (fields.map((key) => object[key]).filter(Boolean).length === 0) {
       const err = "Error: no new field was provided";
@@ -10,7 +17,7 @@ function GenericValidator() {
     return validity;
   };
   /**
-   * @descriptionThis is used for validation of a PATCH. It ensures the object
+   * @description This is used for validation of a PATCH. It ensures the object
    * has an actual update.
    *
    * @param {*} fields list of fields to check
@@ -33,7 +40,7 @@ function GenericValidator() {
   };
   /**
    * @description function for verifying POST calls. This ensures every
-   * field in field list is in non-falsy property in object
+   * field in field list is a non-falsy property in object
    *
    * @param {@} fields a list of the required fields
    * @param {*} object object being validated
@@ -50,7 +57,7 @@ function GenericValidator() {
     return validity;
   };
   return Object.freeze({
-    containsNewField,
+    areSomeFieldsNonNull,
     containsUniqueField,
     areAllFieldsNonNull,
   });

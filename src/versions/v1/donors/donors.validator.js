@@ -26,7 +26,7 @@ function DonorsValidator() {
     //     console.error(err);
     //     return validity;
     // }
-    validity = genericValidator.containsNewField(fields, { ...donor });
+    validity = genericValidator.areSomeFieldsNonNull(fields, { ...donor });
     if (!validity.isValid) {
       const err = "Error: no new field was provided";
       console.error(err);

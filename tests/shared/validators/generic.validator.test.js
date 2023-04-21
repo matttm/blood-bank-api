@@ -112,5 +112,50 @@ describe("GenericValidator", () => {
       });
     }
   });
-  describe("containsNewField", () => {});
+  describe("areSomeFieldsNonNull", () => {
+    const expectError = "Error: no new field was provided";
+    const testingTable = [
+      {
+        title: "should return true when all fields are truthy",
+        object: {
+          name: "morty",
+          age: 14,
+          email: "morty@rick.com",
+        },
+        expect: true,
+        expectError: "",
+      },
+      {
+        title: "should return true when one fields is truthy",
+        object: {
+          name: null,
+          age: null,
+          email: "morty@rick.com",
+        },
+        expect: true,
+        expectError: "",
+      },
+      {
+        title: "should return false when all fields are falsy",
+        object: {
+          name: null,
+          age: null,
+          email: null,
+        },
+        expect: false,
+        expectError,
+      },
+    ];
+    for (const test of testingTable) {
+      it(test.title, () => {
+        const newValues = test.object;
+        const validity = genericValidator.areSomeFieldsNonNull(
+          fields,
+          newValues
+        );
+        expect(validity.isValid).toBe(test.expect);
+        expect(validity.validityError).toBe(test.expectError);
+      });
+    }
+  });
 });
