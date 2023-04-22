@@ -16,6 +16,7 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
       },
       email: {
+        field: "EMAIL",
         type: Sequelize.STRING,
         allowNull: true,
       },
@@ -24,10 +25,12 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
       },
       createdAt: {
+        field: "CREATED_AT",
         type: "TIMESTAMP",
         allowNull: false,
       },
       updatedAt: {
+        field: "UPDATED_AT",
         type: "TIMESTAMP",
         allowNull: false,
       },

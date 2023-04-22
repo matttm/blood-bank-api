@@ -113,7 +113,7 @@ describe("GenericValidator", () => {
     }
   });
   describe("areSomeFieldsNonNull", () => {
-    const expectError = "Error: no new field was provided";
+    const expectError = "Error: no non-null field was provided";
     const testingTable = [
       {
         title: "should return true when all fields are truthy",

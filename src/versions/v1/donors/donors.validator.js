@@ -18,7 +18,7 @@ function DonorsValidator() {
     }
     return validity;
   };
-  const isValidDonorPatch = (id, donorPatch, donor) => {
+  const isValidDonorPatch = (id, donor, patch) => {
     let validity;
     // validity = genericValidator.isModelExistent(model, id);
     // if (!validity.isValid) {
@@ -26,14 +26,14 @@ function DonorsValidator() {
     //     console.error(err);
     //     return validity;
     // }
-    validity = genericValidator.areSomeFieldsNonNull(fields, { ...donor });
+    validity = genericValidator.areSomeFieldsNonNull(fields, { ...patch });
     if (!validity.isValid) {
-      const err = "Error: no new field was provided";
+      const err = "Error: no non-null field was provided";
       console.error(err);
       return validity;
     }
     // TODO think bout this
-    if (donorPatch.bloodType && !bloodTypeCds.includes(donorPatch.bloodType)) {
+    if (patch.bloodType && !bloodTypeCds.includes(patch.bloodType)) {
       const err = "Error: unknown blood type was provided";
       console.error(err);
       validity.isValid = false;
@@ -42,7 +42,7 @@ function DonorsValidator() {
     }
     validity = genericValidator.containsUniqueField(
       fields,
-      { ...donorPatch },
+      { ...patch },
       { ...donor }
     );
     if (!validity.isValid) {

@@ -9,7 +9,7 @@ function GenericValidator() {
   const areSomeFieldsNonNull = (fields, object) => {
     const validity = { isValid: true, validityError: "" };
     if (fields.map((key) => object[key]).filter(Boolean).length === 0) {
-      const err = "Error: no new field was provided";
+      const err = "Error: no non-null field was provided";
       console.error(err);
       validity.isValid = false;
       validity.validityError = err;
