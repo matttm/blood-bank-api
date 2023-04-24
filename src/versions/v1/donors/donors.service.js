@@ -4,10 +4,9 @@ const { eventTypeEnum } = require("../../../enums/event-type.enum");
 const donorsValidator = require("./donors.validator");
 
 function DonorsService() {
-  const Donor = models["Donor"];
   async function getDonors() {
     try {
-      return await Donor.findAll();
+      return await models["Donor"].findAll();
     } catch (e) {
       console.error(`Error occurred while getting donors`);
       throw e;
@@ -16,7 +15,7 @@ function DonorsService() {
 
   async function getDonor(id) {
     try {
-      return await Donor.findOne({
+      return await models["Donor"].findOne({
         where: {
           donorId: id,
         },
@@ -55,7 +54,8 @@ function DonorsService() {
 
   async function updateDonor(id, firstName, lastName, bloodType) {
     try {
-      const validity = donorsValidator.isValidDonorPatch(id, {
+      const currentDonor = await getDonor(id);
+      const validity = donorsValidator.isValidDonorPatch(id, currentDonor, {
         firstName,
         lastName,
         bloodType,
