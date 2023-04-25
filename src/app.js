@@ -1,9 +1,6 @@
-const express = require("express");
-const v1 = require("./versions/v1/v1.routes");
 const { createDbInstance } = require("./database");
 
 async function createApp() {
-  const app = express();
   const instance = await createDbInstance();
 
   try {
@@ -13,6 +10,13 @@ async function createApp() {
     console.error("Unable to connect to the database:", error);
   }
 
+  // these are not being required until the db cinn is
+  // is established, so the mw function can get a proper model
+  //
+  const express = require("express");
+  const v1 = require("./versions/v1/v1.routes");
+
+  const app = express();
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
 
