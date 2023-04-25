@@ -1,9 +1,8 @@
 function ModelService() {
   const isModelExistent = async (model, key, id) => {
     try {
-      console.log(model);
-      const entity = model.count({
-        where: { [key]: id },
+      const entity = await model.count({
+        where: { [key]: +id },
       });
       return !!entity;
     } catch (e) {

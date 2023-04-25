@@ -13,12 +13,14 @@ donorsRouter
   .post(donorsController.createDonor);
 
 // id specific routes are below
-console.log("mymod", models);
+const modelExistentMiddleware = isModelExistentMiddleware(
+  models["Donor"],
+  "donorId"
+);
 donorsRouter
-  .use(isModelExistentMiddleware(models["Donor"], "donorId"))
   .route("/:id")
-  .get(donorsController.getDonor)
-  .patch(donorsController.updateDonor)
-  .delete(donorsController.deleteDonor);
+  .get(modelExistentMiddleware, donorsController.getDonor)
+  .patch(modelExistentMiddleware, donorsController.updateDonor)
+  .delete(modelExistentMiddleware, donorsController.deleteDonor);
 
 module.exports = donorsRouter;
