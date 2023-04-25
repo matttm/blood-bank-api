@@ -12,10 +12,15 @@ donorsRouter
   .get(donorsController.getDonors)
   .post(donorsController.createDonor);
 
+// id specific routes are below
+const modelExistentMiddleware = isModelExistentMiddleware(
+  models["Donor"],
+  "donorId"
+);
 donorsRouter
-  .route("/:id", isModelExistentMiddleware(models["Donor"], "donorId"))
-  .get(donorsController.getDonor)
-  .patch(donorsController.updateDonor)
-  .delete(donorsController.deleteDonor);
+  .route("/:id")
+  .get(modelExistentMiddleware, donorsController.getDonor)
+  .patch(modelExistentMiddleware, donorsController.updateDonor)
+  .delete(modelExistentMiddleware, donorsController.deleteDonor);
 
 module.exports = donorsRouter;
