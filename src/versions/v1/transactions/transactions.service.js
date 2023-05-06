@@ -27,7 +27,7 @@ function TransactionsService() {
       return models[transaction].findAll();
     } catch (e) {
       console.error(e);
-      throw new Error("Error occoured while getting all transactions");
+      throw new Error("Error occurred while getting all transactions");
     }
   }
   async function updateTransaction() {
@@ -35,12 +35,14 @@ function TransactionsService() {
       return models[transaction].findAll();
     } catch (e) {
       console.error(e);
-      throw new Error("Error occoured while getting all transactions");
+      throw new Error("Error occurred while getting all transactions");
     }
   }
   return Object.freeze({
     getTransactions,
     getTransaction,
+    createTransaction,
+    updateTransaction,
   });
 }
 
