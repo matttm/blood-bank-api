@@ -1,4 +1,6 @@
 const models = require("../../../database");
+const messageService = require("../../../shared/services/message.service");
+const { eventTypeEnum } = require("../../../enums/event-type.enum");
 
 function TransactionsService() {
   const transaction = "Transaction";
@@ -24,7 +26,14 @@ function TransactionsService() {
   }
   async function createTransaction() {
     try {
-      return models[transaction].findAll();
+      const params = messageService.constructMessage(
+        eventTypeEnum.NewTransaction.code,
+        {
+          transaction: {},
+        }
+      );
+      const data = await messageService.sendMessage(params);
+      return { success: !!data };
     } catch (e) {
       console.error(e);
       throw new Error("Error occurred while getting all transactions");
@@ -32,7 +41,14 @@ function TransactionsService() {
   }
   async function updateTransaction() {
     try {
-      return models[transaction].findAll();
+      const params = messageService.constructMessage(
+        eventTypeEnum.NewTransaction.code,
+        {
+          transaction: {},
+        }
+      );
+      const data = await messageService.sendMessage(params);
+      return { success: !!data };
     } catch (e) {
       console.error(e);
       throw new Error("Error occurred while getting all transactions");
