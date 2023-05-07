@@ -29,7 +29,7 @@ function MessageService() {
       },
       MessageBody: {
         cd: eventTypeCd,
-        donor: { ...payload },
+        ...payload,
       },
       MessageDeduplicationId: dedupeId,
       MessageGroupId: eventTypeCd,
