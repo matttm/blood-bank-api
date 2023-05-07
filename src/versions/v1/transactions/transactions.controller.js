@@ -10,15 +10,34 @@ async function getTransactions(req, res) {
   }
 }
 async function getTransaction(req, res) {
-  return Promise.resolve();
+  try {
+    const { id } = req?.body;
+    const transactions = await transactionService.getTransaction(id);
+    return res.status(200).json(transactions);
+  } catch (e) {
+    console.error(e);
+    return res.status(500).send("Error getting the transaction");
+  }
 }
 
 async function createTransaction(req, res) {
-  return Promise.resolve();
+  try {
+    const transactions = await transactionService.createTransaction();
+    return res.status(200).json(transactions);
+  } catch (e) {
+    console.error(e);
+    return res.status(500).send("Error creating the transaction");
+  }
 }
 
 async function updateTransaction(req, res) {
-  return Promise.resolve();
+  try {
+    const transactions = await transactionService.updateTransaction();
+    return res.status(200).json(transactions);
+  } catch (e) {
+    console.error(e);
+    return res.status(500).send("Error while updating the transaction");
+  }
 }
 
 module.exports = {
