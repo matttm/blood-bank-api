@@ -42,7 +42,7 @@ function TransactionsService() {
   async function updateTransaction() {
     try {
       const params = messageService.constructMessage(
-        eventTypeEnum.NewTransaction.code,
+        eventTypeEnum.EditTransaction.code,
         {
           transaction: {},
         }

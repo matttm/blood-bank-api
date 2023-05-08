@@ -1,4 +1,4 @@
-module.exports = {
+const transactionTypeEnum = {
   DONATION: {
     code: "D",
     desc: "DONATION",
@@ -7,4 +7,13 @@ module.exports = {
     code: "T",
     desc: "TRANSFUSION",
   },
+};
+
+const transactionTypeCds = Object.values(transactionTypeEnum).map(
+  (v) => v.code
+);
+
+module.exports = {
+  transactionTypeEnum,
+  transactionTypeCds,
 };
