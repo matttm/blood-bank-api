@@ -1,4 +1,7 @@
 const transactionService = require("./transactions.service");
+const utilityService = require("../../../shared/services/utility.service");
+
+const fields = ["transactionType", "bloodAmountML", "donorId"];
 
 async function getTransactions(req, res) {
   try {
@@ -22,7 +25,8 @@ async function getTransaction(req, res) {
 
 async function createTransaction(req, res) {
   try {
-    const transactions = await transactionService.createTransaction();
+    const safeObject = utilityService.cleanObject(fields, req?.body);
+    const transactions = await transactionService.createTransaction(safeObject);
     return res.status(200).json(transactions);
   } catch (e) {
     console.error(e);

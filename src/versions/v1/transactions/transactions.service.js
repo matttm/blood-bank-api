@@ -25,12 +25,10 @@ function TransactionsService() {
       throw new Error("Error occurred while getting a transaction");
     }
   }
-  async function createTransaction() {
+  async function createTransaction(safeObject) {
     try {
       const validity = transactionValidator.isValidTransactionCreation({
-        firstName,
-        lastName,
-        bloodType,
+        ...safeObject,
       });
       if (!validity.isValid) {
         return { success: false, error: validity.validityError };
@@ -39,10 +37,7 @@ function TransactionsService() {
         eventTypeEnum.NewTransaction.code,
         {
           transaction: {
-            transactionId,
-            transactionType,
-            bloodAmountML,
-            donorId,
+            ...safeObject,
           },
         }
       );
