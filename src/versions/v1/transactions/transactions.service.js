@@ -1,6 +1,7 @@
 const models = require("../../../database");
 const messageService = require("../../../shared/services/message.service");
 const { eventTypeEnum } = require("../../../enums/event-type.enum");
+const transactionValidator = require("./transaction.validator");
 
 function TransactionsService() {
   const transaction = "Transaction";
@@ -26,10 +27,23 @@ function TransactionsService() {
   }
   async function createTransaction() {
     try {
+      const validity = transactionValidator.isValidTransactionCreation({
+        firstName,
+        lastName,
+        bloodType,
+      });
+      if (!validity.isValid) {
+        return { success: false, error: validity.validityError };
+      }
       const params = messageService.constructMessage(
         eventTypeEnum.NewTransaction.code,
         {
-          transaction: {},
+          transaction: {
+            transactionId,
+            transactionType,
+            bloodAmountML,
+            donorId,
+          },
         }
       );
       const data = await messageService.sendMessage(params);
