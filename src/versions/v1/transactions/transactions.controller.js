@@ -36,7 +36,8 @@ async function createTransaction(req, res) {
 
 async function updateTransaction(req, res) {
   try {
-    const transactions = await transactionService.updateTransaction();
+    const safeObject = utilityService.cleanObject(fields, req?.body);
+    const transactions = await transactionService.updateTransaction(safeObject);
     return res.status(200).json(transactions);
   } catch (e) {
     console.error(e);

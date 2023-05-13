@@ -48,8 +48,14 @@ function TransactionsService() {
       throw new Error("Error occurred while getting all transactions");
     }
   }
-  async function updateTransaction() {
+  async function updateTransaction(safeObject) {
     try {
+      const validity = transactionValidator.isValidTransactionPatch({
+        ...safeObject,
+      });
+      if (!validity.isValid) {
+        return { success: false, error: validity.validityError };
+      }
       const params = messageService.constructMessage(
         eventTypeEnum.EditTransaction.code,
         {
