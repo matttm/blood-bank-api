@@ -1,9 +1,11 @@
 const genericValidator = require("../../../shared/validators/generic.validator");
 const { transactionTypeCds } = require("../../../enums/transaction-type.enum");
 const { bloodTypeCds } = require("../../../enums/blood-type.enum");
+const modelService = require("../../../shared/services/model.service");
 
 function TransactionValidator() {
   const fields = ["transactionType", "bloodAmountML", "donorId"];
+  const doesDonorExist = modelService.isModelExistentCurry("Donor", "donorId");
   function isValidTransactionCreation(data) {
     let validity;
     validity = genericValidator.areAllFieldsNonNull(fields, { ...data });
@@ -13,6 +15,12 @@ function TransactionValidator() {
       );
       return validity;
     }
+    validity = doesDonorExist(data.donorId);
+    if (!validity.isValid) {
+      console.error(validity.validityError);
+      return validity;
+    }
+
     if (!transactionTypeCds.includes(data.transactionType)) {
       console.error("Error: unknown transaction type was provided");
       validity.isValid = false;

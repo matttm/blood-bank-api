@@ -11,8 +11,20 @@ function ModelService() {
       throw e;
     }
   };
+  const isModelExistentCurry = (model, key) => {
+    return (id) => {
+      const validity = { isValid: true, validityError: "" };
+      const isExists = isModelExistent(model, key, id);
+      if (!isExists) {
+        validity.isValid = false;
+        validity.validityError = `Error: ${model}[${key}] does not exist`;
+      }
+      return validity;
+    };
+  };
   return Object.freeze({
     isModelExistent,
+    isModelExistentCurry,
   });
 }
 
