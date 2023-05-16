@@ -20,12 +20,6 @@ function DonorsValidator() {
   };
   const isValidDonorPatch = (id, donor, patch) => {
     let validity;
-    // validity = genericValidator.isModelExistent(model, id);
-    // if (!validity.isValid) {
-    //     const err ='Error: donor id does not exist';
-    //     console.error(err);
-    //     return validity;
-    // }
     validity = genericValidator.areSomeFieldsNonNull(fields, { ...patch });
     if (!validity.isValid) {
       const err = "Error: no non-null field was provided";

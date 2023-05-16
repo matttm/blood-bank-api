@@ -20,7 +20,6 @@ function TransactionValidator() {
       console.error(validity.validityError);
       return validity;
     }
-
     if (!transactionTypeCds.includes(data.transactionType)) {
       console.error("Error: unknown transaction type was provided");
       validity.isValid = false;
@@ -29,19 +28,20 @@ function TransactionValidator() {
     }
     return validity;
   }
-  function isValidTransactionPatch(safeObject) {
+  function isValidTransactionPatch(current, safeObject) {
     let validity;
-    // validity = genericValidator.isModelExistent(model, id);
-    // if (!validity.isValid) {
-    //     const err ='Error: donor id does not exist';
-    //     console.error(err);
-    //     return validity;
-    // }
     validity = genericValidator.areSomeFieldsNonNull(fields, { ...patch });
     if (!validity.isValid) {
       const err = "Error: no non-null field was provided";
       console.error(err);
       return validity;
+    }
+    if (safeObject.donorId) {
+      validity = doesDonorExist(safeObject.donorId);
+      if (!validity.isValid) {
+        console.error(validity.validityError);
+        return validity;
+      }
     }
     // TODO think bout this
     if (patch.bloodType && !bloodTypeCds.includes(patch.bloodType)) {
@@ -53,8 +53,8 @@ function TransactionValidator() {
     }
     validity = genericValidator.containsUniqueField(
       fields,
-      { ...patch },
-      { ...donor }
+      { ...current },
+      { ...safeObject }
     );
     if (!validity.isValid) {
       const err = "Error: all patch fields are up to date";

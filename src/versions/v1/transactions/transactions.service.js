@@ -50,6 +50,7 @@ function TransactionsService() {
   }
   async function updateTransaction(safeObject) {
     try {
+      const current = await getTransaction(safeObject?.transactionId);
       const validity = transactionValidator.isValidTransactionPatch({
         ...safeObject,
       });
