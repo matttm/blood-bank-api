@@ -5,6 +5,7 @@ const transactionValidator = require("./transaction.validator");
 
 function TransactionsService() {
   const transaction = "Transaction";
+
   async function getTransactions() {
     try {
       return models[transaction].findAll();
@@ -13,6 +14,7 @@ function TransactionsService() {
       throw new Error("Error occurred while getting all transactions");
     }
   }
+
   async function getTransaction(id) {
     try {
       return models[transaction].find({
@@ -25,6 +27,7 @@ function TransactionsService() {
       throw new Error("Error occurred while getting a transaction");
     }
   }
+
   async function createTransaction(safeObject) {
     try {
       const validity = transactionValidator.isValidTransactionCreation({
@@ -48,12 +51,18 @@ function TransactionsService() {
       throw new Error("Error occurred while getting all transactions");
     }
   }
+
   async function updateTransaction(safeObject) {
     try {
       const current = await getTransaction(safeObject?.transactionId);
-      const validity = transactionValidator.isValidTransactionPatch({
-        ...safeObject,
-      });
+      const validity = transactionValidator.isValidTransactionPatch(
+        {
+          ...current,
+        },
+        {
+          ...safeObject,
+        }
+      );
       if (!validity.isValid) {
         return { success: false, error: validity.validityError };
       }
@@ -70,6 +79,7 @@ function TransactionsService() {
       throw new Error("Error occurred while getting all transactions");
     }
   }
+
   return Object.freeze({
     getTransactions,
     getTransaction,
