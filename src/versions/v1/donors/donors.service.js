@@ -49,8 +49,8 @@ function DonorsService() {
       const data = await messageService.sendMessage(params);
       return { success: !!data };
     } catch (e) {
-      console.error(`Error occurred while creating donor`);
-      throw e;
+      console.error(e);
+      throw new Error(`Error occurred while creating donor`);
     }
   }
 
