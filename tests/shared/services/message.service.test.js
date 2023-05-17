@@ -13,9 +13,21 @@ describe("MessageService", () => {
             ?.MessageDeduplicationId
         ).toEqual("v1-v2");
       });
+      it("should stringify nested objects", () => {
+        const object = {
+          k1: "v1",
+          k2: {
+            k2sk1: "v2sv2",
+          },
+        };
+        expect(
+          messageService.constructMessage("TEST", object)
+            ?.MessageDeduplicationId
+        ).toEqual("v1-v2sv2");
+      });
     });
     describe("when there is an id", () => {
-      it("should be event witrh is", () => {
+      it("should be event with is", () => {
         const object = {
           id: 1,
           k1: "v1",
