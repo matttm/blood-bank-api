@@ -18,7 +18,9 @@ function MessageService() {
     }
     if (!["string", "number"].includes(typeof payload)) {
       return Object.values(payload).reduce((acc, cur, idx, arr) => {
-        return acc.concat("-").concat(getDedypeId(eventTypeCd, cur));
+        return acc === ""
+          ? cur
+          : acc.concat("-").concat(getDedypeId(eventTypeCd, cur));
       }, "");
     } else {
       return String(payload);
