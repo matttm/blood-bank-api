@@ -69,7 +69,9 @@ function TransactionsService() {
       const params = messageService.constructMessage(
         eventTypeEnum.EditTransaction.code,
         {
-          transaction: {},
+          transaction: {
+            ...safeObject,
+          },
         }
       );
       const data = await messageService.sendMessage(params);
