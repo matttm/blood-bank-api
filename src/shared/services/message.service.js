@@ -19,12 +19,11 @@ function MessageService() {
     if (!["string", "number"].includes(typeof payload)) {
       return Object.values(payload).reduce((acc, cur, idx, arr) => {
         return acc === ""
-          ? cur
+          ? getDedupeId(eventTypeCd, cur)
           : acc.concat("-").concat(getDedupeId(eventTypeCd, cur));
       }, "");
-    } else {
-      return String(payload);
     }
+    return String(payload);
   };
   const constructMessage = (eventTypeCd, payload) => {
     // if there is an id in the payload, it will be dedupe id,

@@ -25,6 +25,15 @@ describe("MessageService", () => {
             ?.MessageDeduplicationId
         ).toEqual("v1-v2sv2");
       });
+      it("should stringify nested objects", () => {
+        const object = {
+          donor: { fname: "Emily", lname: "Maloney", bloodType: "O" },
+        };
+        expect(
+          messageService.constructMessage("TEST", object)
+            ?.MessageDeduplicationId
+        ).toEqual("Emily-Maloney-O");
+      });
     });
     describe("when there is an id", () => {
       it("should be event with is", () => {
