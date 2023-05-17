@@ -12,7 +12,7 @@ function MessageService() {
       secretAccessKey: process.env.SQS_SECRET_KEY,
     },
   });
-  const getDedypeId = (eventTypeCd, payload) => {
+  const getDedupeId = (eventTypeCd, payload) => {
     if (payload?.id) {
       return `${eventTypeCd}-${payload.id}`;
     }
@@ -20,7 +20,7 @@ function MessageService() {
       return Object.values(payload).reduce((acc, cur, idx, arr) => {
         return acc === ""
           ? cur
-          : acc.concat("-").concat(getDedypeId(eventTypeCd, cur));
+          : acc.concat("-").concat(getDedupeId(eventTypeCd, cur));
       }, "");
     } else {
       return String(payload);
@@ -29,7 +29,7 @@ function MessageService() {
   const constructMessage = (eventTypeCd, payload) => {
     // if there is an id in the payload, it will be dedupe id,
     // if not, combine all payload fields
-    const dedupeId = getDedypeId(eventTypeCd, payload);
+    const dedupeId = getDedupeId(eventTypeCd, payload);
     return {
       MessageAttributes: {
         Event: {
