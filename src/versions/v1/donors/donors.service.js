@@ -39,16 +39,18 @@ function DonorsService() {
       const params = messageService.constructMessage(
         eventTypeEnum.NewDonorApplicant.code,
         {
-          fname: firstName,
-          lname: lastName,
-          bloodType,
+          donor: {
+            fname: firstName,
+            lname: lastName,
+            bloodType,
+          },
         }
       );
       const data = await messageService.sendMessage(params);
       return { success: !!data };
     } catch (e) {
-      console.error(`Error occurred while creating donor`);
-      throw e;
+      console.error(e);
+      throw new Error(`Error occurred while creating donor`);
     }
   }
 
@@ -67,9 +69,12 @@ function DonorsService() {
         eventTypeEnum.EditDonorApplicant.code,
         {
           id,
-          fname: firstName,
-          lname: lastName,
-          bloodType,
+          donor: {
+            id,
+            fname: firstName,
+            lname: lastName,
+            bloodType,
+          },
         }
       );
       const data = await messageService.sendMessage(params);
@@ -85,6 +90,9 @@ function DonorsService() {
         eventTypeEnum.DeleteDonorApplicant.code,
         {
           id,
+          donor: {
+            id,
+          },
         }
       );
       const data = await messageService.sendMessage(params);

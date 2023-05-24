@@ -12,14 +12,23 @@ function MessageService() {
       secretAccessKey: process.env.SQS_SECRET_KEY,
     },
   });
+  const getDedupeId = (eventTypeCd, payload) => {
+    if (payload?.id) {
+      return `${eventTypeCd}-${payload.id}`;
+    }
+    if (!["string", "number"].includes(typeof payload)) {
+      return Object.values(payload).reduce((acc, cur, idx, arr) => {
+        return acc === ""
+          ? getDedupeId(eventTypeCd, cur)
+          : acc.concat("-").concat(getDedupeId(eventTypeCd, cur));
+      }, "");
+    }
+    return String(payload);
+  };
   const constructMessage = (eventTypeCd, payload) => {
     // if there is an id in the payload, it will be dedupe id,
     // if not, combine all payload fields
-    const dedupeId = payload.id
-      ? `${eventTypeCd}-${payload.id}`
-      : Object.values(payload).reduce((acc, cur, idx, arr) => {
-          return acc.concat("-").concat(cur.toString());
-        }, `${eventTypeCd}`);
+    const dedupeId = getDedupeId(eventTypeCd, payload);
     return {
       MessageAttributes: {
         Event: {
@@ -29,7 +38,7 @@ function MessageService() {
       },
       MessageBody: {
         cd: eventTypeCd,
-        donor: { ...payload },
+        ...payload,
       },
       MessageDeduplicationId: dedupeId,
       MessageGroupId: eventTypeCd,

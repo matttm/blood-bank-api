@@ -62,6 +62,7 @@ INSERT INTO blood_bank_db.EVENT_TYPE
 (EVENT_TYPE_ID, EVENT_TYPE_DESC)
 VALUES
 ('NT', 'New Transaction'),
+('ET', 'Edit Transaction'),
 ('NDA', 'New Donor Applicant'),
 ('EDA', 'Edit Donor Applicant'),
 ('DDA', 'Delete Donor Applicant');
