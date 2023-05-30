@@ -5,10 +5,11 @@ const modelService = require("../../../shared/services/model.service");
 
 function TransactionValidator() {
   const fields = ["transactionType", "bloodAmountML", "donorId"];
+  // the following function determines if a given userId exists
   const doesDonorExist = modelService.isModelExistentCurry("Donor", "donorId");
   function isValidTransactionCreation(data) {
     let validity;
-    // folloqing checks that all fields are provided
+    // following checks that all fields are provided
     validity = genericValidator.areAllFieldsNonNull(fields, { ...data });
     if (!validity.isValid) {
       console.error(
