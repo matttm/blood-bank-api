@@ -8,6 +8,7 @@ function TransactionValidator() {
   const doesDonorExist = modelService.isModelExistentCurry("Donor", "donorId");
   function isValidTransactionCreation(data) {
     let validity;
+    // folloqing checks that all fields are provided
     validity = genericValidator.areAllFieldsNonNull(fields, { ...data });
     if (!validity.isValid) {
       console.error(
@@ -43,14 +44,17 @@ function TransactionValidator() {
         return validity;
       }
     }
-    // TODO think bout this
-    if (patch.bloodType && !bloodTypeCds.includes(patch.bloodType)) {
-      const err = "Error: unknown blood type was provided";
-      console.error(err);
+    // if this field is provided, check it's validity
+    if (
+      data.transactionType &&
+      !transactionTypeCds.includes(data.transactionType)
+    ) {
+      console.error("Error: unknown transaction type was provided");
       validity.isValid = false;
-      validity.validityError = err;
+      validity.validityError = "Error: unknown transaction type was provided";
       return validity;
     }
+    // this checks for if the new object contains a change
     validity = genericValidator.containsUniqueField(
       fields,
       { ...current },
